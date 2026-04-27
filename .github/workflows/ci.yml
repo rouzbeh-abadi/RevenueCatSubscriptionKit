@@ -29,10 +29,10 @@ jobs:
       fail-fast: false
       matrix:
         platform:
-          - { name: iOS,      destination: 'generic/platform=iOS Simulator' }
-          - { name: tvOS,     destination: 'generic/platform=tvOS Simulator' }
-          - { name: watchOS,  destination: 'generic/platform=watchOS Simulator' }
-          - { name: visionOS, destination: 'generic/platform=visionOS Simulator' }
+          - { name: iOS,      destination: 'generic/platform=iOS' }
+          - { name: tvOS,     destination: 'generic/platform=tvOS' }
+          - { name: watchOS,  destination: 'generic/platform=watchOS' }
+          - { name: visionOS, destination: 'generic/platform=visionOS' }
 
     steps:
       - name: Checkout
