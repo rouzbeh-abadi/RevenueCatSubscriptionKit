@@ -60,8 +60,12 @@ struct MyApp: App {
 
     init() {
         SubscriptionManager.shared.configure(
-            SubscriptionConfiguration(apiKey: "appl_…",
-                                      premiumEntitlementID: "premium")
+            SubscriptionConfiguration(
+                apiKey: "appl_…",
+                // Must match the identifier in your RevenueCat dashboard
+                // exactly. Case-sensitive: "Pro" ≠ "premium" ≠ "pro".
+                premiumEntitlementID: "Pro"
+            )
         )
     }
 
@@ -212,6 +216,32 @@ The test suite covers:
 - `Codable` round-trips for the cached state.
 - The `UserDefaults` cache (round-trip, key-prefix isolation, corrupted blob handling).
 - Manager behaviour: cache hydration, configure idempotency, lifecycle-driven refresh, snapshot-stream updates, restore success/failure paths, offerings success/failure paths, offline fallback.
+
+## Troubleshooting
+
+### `isPremiumUser` stays `false` after a successful purchase
+
+Almost always an entitlement-ID mismatch. The `premiumEntitlementID`
+you pass to `SubscriptionConfiguration` is compared against the
+keys of `customerInfo.entitlements.active` with exact,
+case-sensitive string equality.
+
+To see what RevenueCat is actually granting at runtime, log the
+active entitlements from a paywall's `onPurchaseCompleted`
+callback:
+
+```swift
+.onPurchaseCompleted { customerInfo in
+    print("active:", customerInfo.entitlements.active.keys.joined(separator: ", "))
+}
+```
+
+Then make sure your `premiumEntitlementID` matches one of those
+strings character-for-character. Common mismatches:
+
+- `"premium"` vs `"Pro"`
+- `"premium"` vs `"premium_access"`
+- Leading or trailing whitespace inside the dashboard identifier
 
 ## License
 

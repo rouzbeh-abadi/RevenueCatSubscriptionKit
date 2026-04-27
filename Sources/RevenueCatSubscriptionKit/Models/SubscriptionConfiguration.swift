@@ -22,8 +22,16 @@ public struct SubscriptionConfiguration: Sendable, Equatable {
     /// for Apple platforms).
     public let apiKey: String
 
-    /// The identifier of the entitlement that gates premium features in the
-    /// RevenueCat dashboard.
+    /// The identifier of the entitlement that gates premium features.
+    ///
+    /// Must match exactly what appears in the RevenueCat dashboard at
+    /// *Project → Entitlements*. The check is **case-sensitive**: an
+    /// entitlement called `"Pro"` will not match a configured value of
+    /// `"premium"` or `"pro"`.
+    ///
+    /// To verify what your dashboard grants at runtime, log
+    /// `customerInfo.entitlements.active.keys` from a paywall's
+    /// `.onPurchaseCompleted` callback.
     public let premiumEntitlementID: String
 
     /// A namespace prepended to every key written to `UserDefaults` by the
