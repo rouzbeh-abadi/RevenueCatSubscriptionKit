@@ -216,4 +216,3 @@ The test suite covers:
 ## License
 
 Released under the [MIT License](LICENSE).
-# RevenueCatSubscriptionKit
