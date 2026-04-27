@@ -31,7 +31,6 @@ jobs:
         platform:
           - { name: iOS,      destination: 'generic/platform=iOS Simulator' }
           - { name: tvOS,     destination: 'generic/platform=tvOS Simulator' }
-          - { name: watchOS,  destination: 'generic/platform=watchOS Simulator' }
           - { name: visionOS, destination: 'generic/platform=visionOS Simulator' }
 
     steps:
